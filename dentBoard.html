@@ -12,26 +12,36 @@
 <body ng-app="dentBoardApp">
 	<div class="row" ng-controller="FormController">
 		<div class="col-xs-4">
+			<h3> Filter </h3>
 			<form ng-submit="submit()">
 				<div class="form-group">
-					<label for="zip_code">Zip Code </label>
-					<input type="text" ng-model="zip_code" id="zip_code" class="form-control"
-					 pattern="[0-9].{4,9}$" title="Hint: five to ten number of digits" />
-				</div>
-
-				<div class="form-group">
 					<label for="last_name"> Last Name </label>
-					<input type="text" ng-model="last_name" class="form-control" id="last_name" />
+					<input type="text" ng-model="myform.last_name" class="form-control" 
+					id="last_name" placeholder="Enter Last Name" />
 				</div>
 
 				<div class="form-group">
 					<label for="first_name"> First Name </label>
-					<input type="text" ng-model="first_name" class="form-control" id="first_name" />
+					<input type="text" ng-model="myform.first_name" class="form-control" 
+					id="first_name" placeholder="Enter First Name" />
+				</div>
+
+				<div class="form-group">
+					<label for="city"> City </label>
+					<input type="text" ng-model="myform.city" class="form-control" 
+					id="city" placeholder="Enter City Name">
+				</div>
+
+				<div class="form-group">
+					<label for="zip_code">Zip Code </label>
+					<input type="text" ng-model="myform.zip_code" id="zip_code" class="form-control"
+					 pattern="[0-9].{4,9}$" title="Hint: five to ten number of digits"
+					 placeholder="Enter Zip Code" />
 				</div>
 
 				<div class="form-group">
 					<label for="state"> State </label>
-					<select ng-model="state" class="form-control" id="state">
+					<select ng-model="myform.state" class="form-control" id="state" >
 						<option disabled selected> -- select an option -- </option>
 						<option value="AL">Alabama</option>
 						<option value="AK">Alaska</option>
@@ -88,13 +98,9 @@
 				</div>
 
 				<div class="form-group">
-					<label for="city"> City </label>
-					<input type="text" ng-model="city" class="form-control" id="city">
-				</div>
-
-				<div class="form-group">
 					<label for="gender"> Gender </label>
-					<select class="form-control" ng-model="gender" class="form-control" id="gender">
+					<select class="form-control" ng-model="myform.gender" 
+					class="form-control" id="gender">
 						<option disabled selected> -- select an option -- </option>
 						<option>male</option>
 						<option>female</option>
@@ -103,33 +109,43 @@
 
 				<div class="form-group">
 					<label for="npi"> NPI Number </label>
-					<input type="number" ng-model="npi" id="npi" class="form-control">
+					<input type="number" ng-model="myform.npi" 
+					id="npi" class="form-control" min="0" placeholder="Enter NPI Number">
 				</div>
 
 				<input type="submit" class="btn btn-primary" id="submit" value="Filter" />
-				</br>
 			</form>
 		</div>
 
 		<div class="col-xs-8">
-			<h2 ng-show="!start"> Your Requirement </h2>
-			<ul>
-				<li ng-repeat="x in attribute_list">
-					{{x.key + ": " + x.value}}
+			<h3 ng-show="!start"> Request </h3>
+			<ul ng-show="!start">
+				<li ng-repeat="x in cont">
+					{{x}}
 				</li>
 			</ul>
-			<div ng-show="result.length != 0" style="overflow: auto; border-style: solid; height: 500%; width: 90%; position: absolute">
+			<div ng-show="result.length != 0">
+				<h3> Result </h3>
+			</div>
+			<div ng-show="result.length != 0" class="result">
 				<ol>
 					<li ng-repeat="x in result">
 						<b>{{x.first_name + " " + x.last_name}}</b> </br>
-						{{x.practice_address.address_line + ", " + x.practice_address.city + ", " + x.practice_address.state + ", " + x.practice_address.zip}} </br>
+						{{x.practice_address.address_line + ", " + x.practice_address.city + ", " 
+						+ x.practice_address.state + ", " + x.practice_address.zip}} </br>
 						{{"Tel: " + x.practice_address.phone}}
 					</li>
 				</ol>
 			</div>
+
 			<div ng-show="result.length == 0 && !start">
-				<h2> Can't find result based on the requirement </h2>
+				<h3> Can't find result based on the requirement </h3>
 			<div>
+
+			<!-- ERROR MESSAGE -->
+			<div ng-show="err!=null" id="error">
+				{{err}}
+			</div>
 		</div>
 
 	</div>

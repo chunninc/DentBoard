@@ -1,0 +1,15 @@
+.result{
+	overflow: auto; 
+	border-style: solid; 
+	height: 340%; 
+	width: 90%; 
+	position: absolute;
+}
+
+.col-xs-4{
+	left: 10px;
+}
+
+#error{
+	color: red;
+}
